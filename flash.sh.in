@@ -1,0 +1,12 @@
+#!/bin/bash
+	
+set -e
+
+FN=medion-hm-sec-sc.bin
+TMP=/tmp
+
+cd "@CMAKE_CURRENT_BINARY_DIR@"
+echo "Programming..."
+echo -ne "\x00\x85\x19MME0008519" | srec_cat - -binary -offset 0x1000 -o "@CMAKE_CURRENT_BINARY_DIR@"/id.ihx -intel
+stm8flash -p stm8l052c6 -c stlinkv2 -s eeprom -w "@CMAKE_CURRENT_BINARY_DIR@"/id.ihx
+stm8flash -p stm8l052c6 -c stlinkv2 -w "@CMAKE_CURRENT_BINARY_DIR@/${FN}"
