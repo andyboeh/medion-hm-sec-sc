@@ -70,6 +70,12 @@ void main(void) {
     relay_init();
     button_init();
     radio_init();
+    // If the battery is critically low,
+    // refuse operation.
+    if(measure_battery() <= BAT_THRESHOLD_CRITICAL)
+        __asm__("halt");
+    // FIXME: We should periodically, like once a day,
+    // call the measure_battery function to get the low battery state.
     enable_interrupts();
     check_rel();
     for(;;) {

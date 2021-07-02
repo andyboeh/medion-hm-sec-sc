@@ -1,5 +1,6 @@
 #include "measure_battery.h"
 #include "stm8l.h"
+#include "medion-hm-sec-sc.h"
 #include <stdbool.h>
 
 bool battery_low = false;
@@ -27,5 +28,9 @@ uint8_t measure_battery() {
 	sum >>= 1;
 	battery_voltage = (50135 + (sum >> 1)) / sum;
 	
+    if(battery_voltage < BAT_THRESHOLD_LOW) {
+        battery_low = true;
+    }
+
     return battery_voltage;
 }

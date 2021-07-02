@@ -30,4 +30,10 @@ typedef enum {
 #define TIMER_BUTTON  (1 << 1)
 #define TIMER_REL     (1 << 2)
 
+// Set battery state to low if it is
+// below threshold
+// Refuse operation if we are critical
+#define BAT_THRESHOLD_LOW      22
+#define BAT_THRESHOLD_CRITICAL 19
+
 #endif //MEDION_HM_SEC_SC_H
