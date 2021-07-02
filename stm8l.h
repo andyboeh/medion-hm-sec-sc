@@ -147,6 +147,7 @@
 
 #define CLK_PCKENR1_TIM2 (1u<<0)
 #define CLK_PCKENR1_TIM3 (1u<<1)
+#define CLK_PCKENR1_TIM4 (1u<<2)
 #define CLK_PCKENR1_SPI (1u<<4)
 
 #define CLK_PCKENR2_ADC1 (1u<<0)
@@ -396,6 +397,17 @@
 #define TIM3_CCR2L (*(__IO uint8_t*)0x5294)
 #define TIM3_BKR (*(__IO uint8_t*)0x5295)
 #define TIM3_OISR (*(__IO uint8_t*)0x5296)
+
+#define TIM4_CR1 (*(__IO uint8_t*)0x52E0)
+#define TIM4_CR2 (*(__IO uint8_t*)0x52E1)
+#define TIM4_SMCR (*(__IO uint8_t*)0x52E2)
+#define TIM4_DER (*(__IO uint8_t*)0x52E3)
+#define TIM4_IER (*(__IO uint8_t*)0x52E4)
+#define TIM4_SR1 (*(__IO uint8_t*)0x52E5)
+#define TIM4_EGR (*(__IO uint8_t*)0x52E6)
+#define TIM4_CNTR (*(__IO uint8_t*)0x52E7)
+#define TIM4_PSCR (*(__IO uint8_t*)0x52E8)
+#define TIM4_ARR (*(__IO uint8_t*)0x52E9)
 
 #define TIMx_CR1_CEN 1
 #define TIMx_SMCR_TS 4

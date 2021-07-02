@@ -6,20 +6,6 @@ extern uint8_t as_cnt;
 
 void as_send_status() {
     as_packet_t status;
-    /*= { .length = AS_HEADER_SIZE + 6,
-                           .counter = as_cnt++,
-                           .flags = AS_FLAG_DEF,
-                           .type = 0x41,
-                           .from = { LIST_ID(hm_id) },
-                           .to = { LIST_ID(hm_master_id) },
-                           .payload = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-                                         //wanted_heat,
-                                         //temp & 0xff, temp >> 8,
-                                         //motor_percent,
-                                         //motor_error,
-                                         //battery_voltage
-	                     }};
-    */
     status.length = AS_HEADER_SIZE + 1;
     status.counter = as_cnt++;
     status.flags = AS_FLAG_DEF;

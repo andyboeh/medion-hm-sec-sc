@@ -24,13 +24,14 @@ details and resolution.
 
 Currently, the basics are working. A short button press initializes pairing
 or, if already paired, enables config mode. Reading the magnet and sending
-the status is working. There is no feedback on the device, see TODO.
+the status is working - if it's sent successfully, it blinks once, in case
+of error, it blinks three times.
 
 ## TODO
 
-  - Power Management
+  - Improve/measure power management
   - Battery reporting
-  - LED feedback on activities
+  - Better LED feedback on activities
   - AES
   - Configuration settings
   - Periodic battery reporting

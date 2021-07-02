@@ -22,7 +22,7 @@ void as_handle_packet(as_packet_t * packet)
 	else if (packet->type == 0x11 && packet->length >= AS_HEADER_SIZE + 1 && packet->payload[0] == 0xca) { // enter bootloader
 		enter_bootloader = true;
 		ack = true;
-	}
+    }
     else if ((packet->type == 0x41 && packet->length >= AS_HEADER_SIZE + 4) ||
              (packet->type == 0x02 && packet->length >= AS_HEADER_SIZE + 1 + 4 && packet->payload[0] == 0x01)) {
 		uint8_t * data = packet->payload;
@@ -43,12 +43,6 @@ void as_handle_packet(as_packet_t * packet)
 
 	if (packet->flags & AS_FLAG_BIDI) { // send answer
         as_packet_t dev_info;
-        /*= { .length = 10, .counter = packet->counter, .flags = AS_FLAG_DEF, .type = 0x02,
-										 .from = { LIST_ID(hm_id) }, .to = { LIST_ID(packet->from) },
-										 .payload = {
-											 ack ? 0x00 : 0x80
-									  }};
-                                      */
         dev_info.length = 10;
         dev_info.counter = packet->counter;
         dev_info.flags = AS_FLAG_DEF;

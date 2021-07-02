@@ -1,5 +1,8 @@
 #include "measure_battery.h"
 #include "stm8l.h"
+#include <stdbool.h>
+
+bool battery_low = false;
 
 uint8_t measure_battery() {
     uint16_t sum = 0;

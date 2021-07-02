@@ -5,15 +5,8 @@ extern uint8_t as_cnt;
 
 void as_send_device_info()
 {
-    as_packet_t dev_info;/* = { .length = 26, .counter = as_cnt++, .flags = AS_FLAG_DEF, .type = 0x00,
-	                         .from = { LIST_ID(hm_id) }, .to = { LIST_ID(hm_master_id) },
-	                         .payload = {
-	                            0x01, // fw version
-	                            0x8F, 0xFD, // model version
-	                            LIST_SERIAL(hm_serial),
-	                            0x30, 0x00, 0x00, 0x00 // unknown?
-	                       }};
-                           */
+    as_packet_t dev_info;
+
     dev_info.length = 26;
     dev_info.counter = as_cnt++;
     dev_info.flags = AS_FLAG_DEF;

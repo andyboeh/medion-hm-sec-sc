@@ -4,6 +4,7 @@
 #include "spi_enable.h"
 #include "spi_disable.h"
 #include "as_listen.h"
+#include "led_blink.h"
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -11,6 +12,7 @@ extern bool window_open;
 extern uint8_t as_cnt;
 extern bool finished;
 extern bool as_ok;
+extern bool battery_low;
 
 void as_send_contact_state() {
     as_packet_t status;
@@ -30,6 +32,8 @@ void as_send_contact_state() {
     status.to[1] = hm_master_id[1];
     status.to[2] = hm_master_id[2];
     status.payload[0] = 0x01; // Channel 1
+    if(battery_low)
+        status.payload[0] |= 0x80;
     status.payload[1] = 0x00; // ?
     if(window_open) {
         status.payload[2] = 0x02;
@@ -39,7 +43,10 @@ void as_send_contact_state() {
     if (!ID_IS_NULL(hm_master_id))
         status.flags |= AS_FLAG_BIDI;
 
-    as_send(&status);
-    as_listen();
+    if(as_send(&status)) {
+        led_blink(LED_BLINK_ONCE);
+    } else {
+        led_blink(LED_BLINK_THRICE);
+    }
     spi_disable();
 }

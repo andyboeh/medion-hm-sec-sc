@@ -38,6 +38,9 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/timer
     ${CMAKE_CURRENT_SOURCE_DIR}/spi
     ${CMAKE_CURRENT_SOURCE_DIR}/led
+    ${CMAKE_CURRENT_SOURCE_DIR}/button
+    ${CMAKE_CURRENT_SOURCE_DIR}/relay
+    ${CMAKE_CURRENT_SOURCE_DIR}/battery
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
@@ -47,6 +50,8 @@ set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/led/led_on.c
     ${CMAKE_CURRENT_SOURCE_DIR}/led/led_off.c
     ${CMAKE_CURRENT_SOURCE_DIR}/led/led_toggle.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/led/led_isr.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/led/led_blink.c
     ${CMAKE_CURRENT_SOURCE_DIR}/crc16.c
     ${CMAKE_CURRENT_SOURCE_DIR}/asksin/as_config_end.c
     ${CMAKE_CURRENT_SOURCE_DIR}/asksin/as_config_start.c
@@ -91,6 +96,14 @@ set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/timer/wait_timeout.c
     ${CMAKE_CURRENT_SOURCE_DIR}/timer/set_singleshot_timer.c
     ${CMAKE_CURRENT_SOURCE_DIR}/timer/clear_singleshot_timer.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/timer/led_timer_init.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/timer/led_timer_deinit.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/timer/tick_isr.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/timer/singleshot_isr.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/button/button_init.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/button/button_isr.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/relay/relay_init.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/relay/relay_isr.c
     )
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/flash.sh.in ${CMAKE_CURRENT_SOURCE_DIR}/flash.sh @ONLY)
