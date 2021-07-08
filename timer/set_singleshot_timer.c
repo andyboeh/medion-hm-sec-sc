@@ -2,9 +2,7 @@
 #include "stm8l.h"
 
 void set_singleshot_timer(uint16_t timeout_ms) {
-    // enable tick counter
-    uint16_t reload_value;
-    reload_value = timeout_ms * 62;
+    uint16_t reload_value = timeout_ms * 62;
 
     CLK_PCKENR1 |= CLK_PCKENR1_TIM3; // enable clock
     TIM3_PSCR = 5; // prescale by 32
@@ -22,6 +20,8 @@ void set_singleshot_timer(uint16_t timeout_ms) {
     TIM3_CR1 |= 1 << 7; // Auto-reload enable
     TIM3_CR1 |= 1 << 4; // Count down
     TIM3_CR1 |= TIMx_CR1_CEN; // Enable counter
+
+    TIM3_SR1 &= ~(1 << 0); // Clear interrupt
 
     //WFE_CR1 |= WFE_CR1_TIM2_EV1; // timer 2 capture and compare events
     //WFE_CR1 |= WFE_CR1_TIM2_EV0;

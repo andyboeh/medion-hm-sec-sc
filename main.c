@@ -23,11 +23,13 @@
 #include "relay_init.h"
 #include "relay_isr.h"
 #include "measure_battery.h"
+#include "as_factory_reset.h"
 #include <stdbool.h>
 
 volatile e_request request_operation = OPERATION_NONE;
 volatile uint8_t timer_request = TIMER_NONE;
 bool window_open = false;
+bool button_pressed_while_boot = false;
 
 static void check_rel() {
     if(PA_IDR & REL) { // magnet not present
@@ -49,14 +51,21 @@ static void check_rel() {
 
 static void check_operation() {
     switch(request_operation) {
-    case OPERATION_CONFIG_PAIR:
-        tick_init();
-        as_poll();
-        tick_deinit();
-    break;
     case OPERATION_CHECK_REL:
         check_rel();
     break;
+    case OPERATION_BUTTON_SHORT:
+        tick_init();
+        as_poll();
+        tick_deinit();
+        break;
+    case OPERATION_BUTTON_LONG:
+        if(button_pressed_while_boot) {
+            button_pressed_while_boot = false;
+            as_factory_reset();
+            led_blink(LED_BLINK_THRICE);
+        }
+        break;
     case OPERATION_NONE:
     break;
     }

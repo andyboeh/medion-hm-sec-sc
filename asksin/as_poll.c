@@ -8,7 +8,7 @@
 #include <stdbool.h>
 #include "as_defines.h"
 
-static bool finished;
+extern bool finished;
 bool as_ok;
 
 void as_poll()
@@ -17,6 +17,14 @@ void as_poll()
 	finished = false;
 	as_ok = false;
 
+    if(ID_IS_NULL(hm_master_id)) {
+        led_blink(LED_BLINK_FAST);
+    } else {
+        led_blink(LED_BLINK_SLOW);
+    }
+
+    as_send_device_info();
+    /*
     if (ID_IS_NULL(hm_master_id)) {
         led_blink(LED_BLINK_FAST);
 		as_send_device_info();
@@ -25,12 +33,15 @@ void as_poll()
         led_blink(LED_BLINK_SLOW);
 		as_send_status();
    }
+   */
 	
 	as_listen();
+
     if(as_ok) {
         led_blink(LED_BLINK_ONCE);
     } else {
         led_blink(LED_BLINK_THRICE);
     }
+
 	spi_disable();
 }

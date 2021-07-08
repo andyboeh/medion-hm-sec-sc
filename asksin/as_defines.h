@@ -10,14 +10,13 @@
 extern const uint8_t * hm_id;
 extern const uint8_t * hm_serial;
 extern const uint8_t * hm_master_id;
-#ifndef BOOTLOADER // the following line is not optimized but treated as a real pointer. but in bootloader we can't use CONST code segment (because of needed far addressing mode which is unsupported by sdcc)
-extern uint8_t * const min_battery_voltage;
-#endif
+extern const uint8_t * aes_key;
+extern const uint8_t * aes_channel0;
+extern const uint8_t * aes_channel1;
+extern const uint8_t * aes_key_index;
 
 #ifndef BOOTLOADER
 extern bool as_ok;
-extern uint8_t as_valve_value; //FIXME
-extern uint16_t as_sleep_value; //FIXME
 #endif
 
 #define AS_FLAG_DEF 0x80

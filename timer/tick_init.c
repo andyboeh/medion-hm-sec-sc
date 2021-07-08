@@ -9,8 +9,13 @@ volatile uint16_t tick_count = 0;
 volatile bool wait_for_timeout = false;
 volatile uint16_t timeout_at = 0;
 
+volatile bool tick_ok = false;
+
 void tick_init()
 {
+    if(tick_ok)
+        return;
+
 	// enable tick counter
     CLK_PCKENR1 |= CLK_PCKENR1_TIM2; // enable clock
     TIM2_PSCR = 5; // prescale by 32
@@ -31,4 +36,5 @@ void tick_init()
 
     //WFE_CR1 |= WFE_CR1_TIM2_EV1; // timer 2 capture and compare events
     //WFE_CR1 |= WFE_CR1_TIM2_EV0;
+    tick_ok = true;
 }

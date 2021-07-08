@@ -22,9 +22,17 @@
 
 typedef enum {
     OPERATION_NONE = 0,
-    OPERATION_CONFIG_PAIR,
     OPERATION_CHECK_REL,
+    OPERATION_BUTTON_SHORT,
+    OPERATION_BUTTON_LONG,
+    SINGLESHOT_ONE_SECOND,
 } e_request;
+
+typedef enum {
+    BUTTON_PRESS_NONE = 0,
+    BUTTON_PRESS_SHORT,
+    BUTTON_PRESS_LONG
+} e_button_press_type;
 
 #define TIMER_NONE    0x00
 #define TIMER_BUTTON  (1 << 1)

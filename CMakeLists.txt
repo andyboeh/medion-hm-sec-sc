@@ -25,7 +25,7 @@ set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 
 message(STATUS "Cross-compiling with the sdcc toolchain")
 
-SET(CMAKE_C_FLAGS "-mstm8 --opt-code-size --std-sdcc99 --nogcse --fverbose-asm --float-reent -DCONSTMEM=const --debug --all-callee-saves --verbose --stack-auto --no-peep")
+SET(CMAKE_C_FLAGS "-mstm8 --opt-code-size --std-sdcc99 --nogcse --fverbose-asm --float-reent --debug --all-callee-saves --verbose --stack-auto --no-peep")
 
 
 #link_directories(
@@ -46,6 +46,7 @@ include_directories(
 
 set(SOURCES
     main.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/aes.c
     ${CMAKE_CURRENT_SOURCE_DIR}/led/led_init.c
     ${CMAKE_CURRENT_SOURCE_DIR}/led/led_on.c
     ${CMAKE_CURRENT_SOURCE_DIR}/led/led_off.c
@@ -53,9 +54,14 @@ set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/led/led_isr.c
     ${CMAKE_CURRENT_SOURCE_DIR}/led/led_blink.c
     ${CMAKE_CURRENT_SOURCE_DIR}/crc16.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/asksin/as_get_aes_key_index.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/asksin/as_set_new_aes_key.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/asksin/as_factory_reset.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/asksin/as_config_req.c
     ${CMAKE_CURRENT_SOURCE_DIR}/asksin/as_config_end.c
     ${CMAKE_CURRENT_SOURCE_DIR}/asksin/as_config_start.c
     ${CMAKE_CURRENT_SOURCE_DIR}/asksin/as_config_write.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/asksin/as_set_aes_key_index.c
     ${CMAKE_CURRENT_SOURCE_DIR}/asksin/as_decode.c
     ${CMAKE_CURRENT_SOURCE_DIR}/asksin/as_encode.c
     ${CMAKE_CURRENT_SOURCE_DIR}/asksin/as_handle_packet.c
@@ -119,6 +125,9 @@ SET_TARGET_PROPERTIES(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE C)
 SET_TARGET_PROPERTIES(${PROJECT_NAME} PROPERTIES LINK_FLAGS
         "--out-fmt-ihx --code-loc 0x8000"
 )
+
+ADD_DEFINITIONS("-DCONSTMEM=const")
+ADD_DEFINITIONS("-DCBC")
 
 ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} POST_BUILD COMMAND
                    ${CMAKE_OBJCOPY} -I ihex ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.ihx -O binary ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.bin

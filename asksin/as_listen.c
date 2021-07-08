@@ -12,7 +12,10 @@ bool finished;
 const uint8_t * hm_id = EEPROM_START; // 3 byte
 const uint8_t * hm_serial = EEPROM_START + 3; // 10 byte
 const uint8_t * hm_master_id = EEPROM_START + 13; // 3 byte
-uint8_t * const min_battery_voltage = EEPROM_START + 16; // 1 byte
+const uint8_t * aes_key = EEPROM_START + 16; // 16 byte
+const uint8_t * aes_channel0 = EEPROM_START + 32; // 1 byte
+const uint8_t * aes_channel1 = EEPROM_START + 33; // 1 byte
+const uint8_t * aes_key_index = EEPROM_START + 34; // 1 byte
 
 void as_listen() {
 	uint16_t timeout_at = get_tick() + 2000;

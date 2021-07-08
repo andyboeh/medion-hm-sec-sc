@@ -17,19 +17,38 @@ bool as_config_write(uint8_t channel, uint8_t length, uint8_t * data)
 		;
 
 	for (uint8_t i = 0; i + 1 < length; i += 2) {
-        if (cdata.channel == 0 && cdata.list == 0) {
-			if (data[i] == 0x0a)
-				((uint8_t*)hm_master_id)[0] = data[i + 1];
-			else if (data[i] == 0x0b)
-				((uint8_t*)hm_master_id)[1] = data[i + 1];
-			else if (data[i] == 0x0c)
-				((uint8_t*)hm_master_id)[2] = data[i + 1];
-			else if (data[i] == 0x0d)
-				*min_battery_voltage = data[i + 1];
-			else
-				continue; // don't wait for write completion
-		} else
-			continue; // don't wait for write completion
+
+        switch(data[i]) {
+        case 0x08:
+            if(cdata.channel == 1 && cdata.list == 1) {
+                ((uint8_t*)aes_channel1)[0] = data[i + 1];
+            } else {
+                continue;
+            }
+        case 0x0a:
+            if(cdata.channel == 0 && cdata.list == 0) {
+                ((uint8_t*)hm_master_id)[0] = data[i + 1];
+            } else {
+                continue;
+            }
+            break;
+        case 0x0b:
+            if(cdata.channel == 0 && cdata.list == 0) {
+                ((uint8_t*)hm_master_id)[1] = data[i + 1];
+            } else {
+                continue;
+            }
+            break;
+        case 0x0c:
+            if(cdata.channel == 0 && cdata.list == 0) {
+                ((uint8_t*)hm_master_id)[2] = data[i + 1];
+            } else {
+                continue;
+            }
+            break;
+        default:
+            continue;
+        }
 
 		// wait for eeprom write completion
 		while (!(FLASH_IAPSR & FLASH_IAPSR_EOP))
