@@ -49,6 +49,9 @@ void as_handle_packet(as_packet_t * packet)
         break;
     case 0x02: // ACK
         if(packet->length >= AS_HEADER_SIZE + 1 + 4) {
+            if(packet->payload[0] == 0x04) { // AES
+
+            }
             if(packet->payload[0] == 0x01) { // ACK_STATUS
                 finished = true;
                 as_ok = true;

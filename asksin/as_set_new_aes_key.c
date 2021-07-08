@@ -49,6 +49,9 @@ bool as_set_new_aes_key(as_packet_t *packet) {
     } else {
         AES_init_ctx(&ctx, aes_key);
     }
+    // Set the IV explicitly to 0, wihtout calling
+    // the AES helper functions
+    memset(&ctx.Iv, 0x00, AES_BLOCKLEN);
     AES_CBC_decrypt_buffer(&ctx, packet->payload, packet->length - AS_HEADER_SIZE);
     if(packet->payload[0] != 0x01)
         return false;
