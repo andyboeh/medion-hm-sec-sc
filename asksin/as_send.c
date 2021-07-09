@@ -7,7 +7,6 @@
 #include "radio_receive.h"
 #include "as_handle_packet.h"
 
-#define MAX_ACK_LENGTH 14 // ACKStatus is 9 + 1 + 4
 static as_packet_t ack_packet;
 
 bool as_send(as_packet_t * packet) {
@@ -28,11 +27,10 @@ bool as_send(as_packet_t * packet) {
 		timeout_at = get_tick() + 300;
 		while (!tick_elapsed(timeout_at)) {
 
-			radio_enter_receive(MAX_ACK_LENGTH);
+            radio_enter_receive(MAX_LENGTH);
 			if (!radio_wait(timeout_at))
-				continue;
-		
-			if (!radio_receive(&ack_packet, MAX_ACK_LENGTH)) {
+                continue;
+            if (!radio_receive(&ack_packet, MAX_LENGTH)) {
 				__asm__ ("break");
 				continue; // if crc check fails, continue receiving
 			}
@@ -44,10 +42,16 @@ bool as_send(as_packet_t * packet) {
 				continue; // not from our target
 			if (ack_packet.counter != packet->counter)
 				continue; // answer to wrong/another message
-			if (ack_packet.type != 0x02)
+            if (ack_packet.type != 0x02) {
 				continue; // not an ack packet
-			if (ack_packet.length >= AS_HEADER_SIZE + 1 && ack_packet.payload[0] == 0x01) // ACKStatus
-				as_handle_packet(&ack_packet);
+            }
+            if (ack_packet.length >= AS_HEADER_SIZE + 1 && ack_packet.payload[0] == 0x01) // ACKStatus
+                as_handle_packet(&ack_packet, NULL);
+            if (ack_packet.length >= AS_HEADER_SIZE + 1 && ack_packet.payload[0] == 0x04) { // AES ACK
+                as_handle_packet(&ack_packet, packet);
+                timeout_at = get_tick() + 500;
+                continue;
+            }
 
 			ok = true;
 			break;

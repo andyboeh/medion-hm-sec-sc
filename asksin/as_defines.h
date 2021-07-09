@@ -27,7 +27,6 @@ extern bool as_ok;
 #define LIST_ID(a) (a)[0], (a)[1], (a)[2]
 #define LIST_SERIAL(a) (a)[0], (a)[1], (a)[2], (a)[3], (a)[4], (a)[5], (a)[6], (a)[7], (a)[8], (a)[9]
 
-#define MAX_ACK_LENGTH 14 // ACKStatus is 9 + 1 + 4
 #define CONFIG_START_LENGTH 16
 #define CONFIG_WRITE_LENGTH 60
 #define CONFIG_END_LENGTH 11

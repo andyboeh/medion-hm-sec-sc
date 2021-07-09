@@ -54,6 +54,7 @@ set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/led/led_isr.c
     ${CMAKE_CURRENT_SOURCE_DIR}/led/led_blink.c
     ${CMAKE_CURRENT_SOURCE_DIR}/crc16.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/asksin/as_aes_reply.c
     ${CMAKE_CURRENT_SOURCE_DIR}/asksin/as_get_aes_key_index.c
     ${CMAKE_CURRENT_SOURCE_DIR}/asksin/as_set_new_aes_key.c
     ${CMAKE_CURRENT_SOURCE_DIR}/asksin/as_factory_reset.c
@@ -70,7 +71,6 @@ set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/asksin/as_send.c
     ${CMAKE_CURRENT_SOURCE_DIR}/asksin/as_send_contact_state.c
     ${CMAKE_CURRENT_SOURCE_DIR}/asksin/as_send_device_info.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/asksin/as_send_status.c
     ${CMAKE_CURRENT_SOURCE_DIR}/battery/measure_battery.c
     ${CMAKE_CURRENT_SOURCE_DIR}/radio/radio_deinit.c
     ${CMAKE_CURRENT_SOURCE_DIR}/radio/radio_init.c

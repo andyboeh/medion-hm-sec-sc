@@ -4,6 +4,7 @@
 #include "as_config_end.h"
 #include "as_config_write.h"
 #include "as_set_new_aes_key.h"
+#include "as_aes_reply.h"
 #include "led_blink.h"
 #include "as_send.h"
 #include "as_packet.h"
@@ -11,7 +12,7 @@
 
 extern bool finished;
 
-void as_handle_packet(as_packet_t * packet)
+void as_handle_packet(as_packet_t * packet, as_packet_t *sent_packet)
 {
 	bool enter_bootloader = false;
 	bool ack = false;
@@ -50,7 +51,8 @@ void as_handle_packet(as_packet_t * packet)
     case 0x02: // ACK
         if(packet->length >= AS_HEADER_SIZE + 1 + 4) {
             if(packet->payload[0] == 0x04) { // AES
-
+                as_aes_reply(packet, sent_packet, &reply_packet);
+                ack_payload = false;
             }
             if(packet->payload[0] == 0x01) { // ACK_STATUS
                 finished = true;
@@ -60,7 +62,7 @@ void as_handle_packet(as_packet_t * packet)
         }
         break;
     case 0x04: // AES_KEY_EXCHANGE
-        // SET_AES_KEY_INDEX
+        // SET_AES_KEY
         if(packet->length >= AS_HEADER_SIZE + 16) {
             ack = as_set_new_aes_key(packet);
         }
@@ -74,8 +76,6 @@ void as_handle_packet(as_packet_t * packet)
 
     }
 	
-	// TODO conf readback
-
 	if (packet->flags & AS_FLAG_BIDI) { // send answer
         for(int i=0; i<3; i++) {
             reply_packet.from[i] = hm_id[i];

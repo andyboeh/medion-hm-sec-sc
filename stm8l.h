@@ -3,6 +3,10 @@
 
 #define EEPROM_START 0x1000
 
+#ifndef NULL
+#define NULL 0
+#endif
+
 #define enable_interrupts() __asm__("rim")
 #define disable_interrupts() __asm__("sim")
 

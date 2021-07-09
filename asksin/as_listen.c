@@ -46,7 +46,7 @@ void as_listen() {
 		}
 		as_cnt++;
 
-		as_handle_packet(&packet);
+        as_handle_packet(&packet, NULL);
 		timeout_at = get_tick() + 1000;
 	}
 }
