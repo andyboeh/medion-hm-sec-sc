@@ -25,18 +25,14 @@ details and resolution.
 Currently, the basics are working. A short button press initializes pairing
 or, if already paired, enables config mode. Reading the magnet and sending
 the status is working - if it's sent successfully, it blinks once, in case
-of error, it blinks three times.
+of error, it blinks three times. 
+Changing the AES key and AES challenge-response is also working.
 
 ## TODO
 
   - Improve/measure power management
-  - Battery reporting
-  - Better LED feedback on activities
-  - AES
-  - Configuration settings
   - Periodic battery reporting
 
 ## Caveats
 
-This has only been tested with Homegear, not with FHEM or a CCU! AES is not 
-supported, configuration settings is not supported.
+This has only been tested with Homegear, not with FHEM or a CCU!
