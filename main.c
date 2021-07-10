@@ -4,6 +4,8 @@
 #include "led_off.h"
 #include "led_init.h"
 #include "led_toggle.h"
+#include "led_timer_deinit.h"
+#include "wait_for_led.h"
 #include "tick_init.h"
 #include "wait_timeout.h"
 #include "get_tick.h"
@@ -49,15 +51,25 @@ static void check_rel() {
     }
 }
 
+static void enter_halt() {
+    tick_deinit();
+    clear_singleshot_timer();
+    wait_for_led();
+    led_timer_deinit();
+    __asm__("halt");
+}
+
 static void check_operation() {
     switch(request_operation) {
     case OPERATION_CHECK_REL:
         check_rel();
-    break;
+        enter_halt();
+        break;
     case OPERATION_BUTTON_SHORT:
         tick_init();
         as_poll();
         tick_deinit();
+        enter_halt();
         break;
     case OPERATION_BUTTON_LONG:
         if(button_pressed_while_boot) {
@@ -65,6 +77,10 @@ static void check_operation() {
             as_factory_reset();
             led_blink(LED_BLINK_THRICE);
         }
+        enter_halt();
+        break;
+    case OPERATION_ENTER_HALT:
+        enter_halt();
         break;
     case OPERATION_NONE:
     break;
@@ -72,8 +88,24 @@ static void check_operation() {
     request_operation = OPERATION_NONE;
 }
 
+static void gpio_configure_unused() {
+    PA_DDR = 0;
+    PA_CR1 = 0xff;
+    PB_DDR = 0;
+    PB_CR1 = 0xff;
+    PC_DDR = 0;
+    PC_CR1 = 0xff;
+    PD_DDR = 0;
+    PD_CR1 = 0xff;
+    PE_DDR = 0;
+    PE_CR1 = 0xff;
+    PF_DDR = 0;
+    PF_CR1 = 0xff;
+}
+
 void main(void) {
     disable_interrupts();
+    gpio_configure_unused();
     led_init();
     led_off();
     relay_init();

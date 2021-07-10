@@ -28,9 +28,13 @@ the status is working - if it's sent successfully, it blinks once, in case
 of error, it blinks three times. 
 Changing the AES key and AES challenge-response is also working.
 
+## Battery consumption
+
+During idle, the battery consumption is about 22uA. The consumption rises significantly
+during transmit and receive, up to a few mA.
+
 ## TODO
 
-  - Improve/measure power management
   - Periodic battery reporting
 
 ## Caveats

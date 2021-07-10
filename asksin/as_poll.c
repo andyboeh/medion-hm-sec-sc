@@ -1,6 +1,5 @@
 #include "as_poll.h"
 #include "as_send_device_info.h"
-#include "as_send_status.h"
 #include "as_listen.h"
 #include "spi_disable.h"
 #include "spi_enable.h"

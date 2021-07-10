@@ -9,6 +9,7 @@ extern volatile bool tick_ok;
 void tick_deinit()
 {
 	clear_timeout();
+    TIM2_SR1 &= ~(1<<0); // Clear interrupt
 	CLK_PCKENR1 &= ~CLK_PCKENR1_TIM2;
     tick_ok = false;
 }

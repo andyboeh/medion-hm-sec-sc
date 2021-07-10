@@ -25,6 +25,7 @@ void as_factory_reset() {
     write_value(aes_channel0, 0x00);
     write_value(aes_channel1, 0x00);
     write_value(aes_key_index, 0x00);
+    write_value(cyclic_info, 0x00);
 
     FLASH_IAPSR &= ~FLASH_IAPSR_DUL;
 }

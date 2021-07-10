@@ -4,6 +4,7 @@
 #include "as_config_end.h"
 #include "as_config_write.h"
 #include "as_set_new_aes_key.h"
+#include "as_peer_list_req.h"
 #include "as_aes_reply.h"
 #include "led_blink.h"
 #include "as_send.h"
@@ -31,18 +32,20 @@ void as_handle_packet(as_packet_t * packet, as_packet_t *sent_packet)
         if(packet->length >= AS_HEADER_SIZE + 2) {
             switch(packet->payload[1]) {
             case 0x03: // CONFIG_PEER_LIST_REQ
+                as_peer_list_req(packet->payload[0], &reply_packet);
+                ack_payload = false;
                 break;
             case 0x04: // CONFIG_PARAM_REQ
                 as_config_req(packet->payload[0], packet->payload[6], &reply_packet);
                 ack_payload = false;
                 break;
-            case 0x05:
+            case 0x05: // CONFIG_START
                 ack = as_config_start(packet->payload[0], packet->payload[6]);
                 break;
-            case 0x08:
+            case 0x08: // CONFIG_WRITE
                 ack = as_config_write(packet->payload[0], packet->length - AS_HEADER_SIZE - 2, packet->payload + 2);
                 break;
-            case 0x06:
+            case 0x06: // CONFIG_END
                 ack = as_config_end(packet->payload[0]);
                 break;
             }

@@ -14,6 +14,7 @@ extern const uint8_t * aes_key;
 extern const uint8_t * aes_channel0;
 extern const uint8_t * aes_channel1;
 extern const uint8_t * aes_key_index;
+extern const uint8_t * cyclic_info;
 
 #ifndef BOOTLOADER
 extern bool as_ok;

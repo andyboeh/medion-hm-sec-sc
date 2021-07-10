@@ -53,7 +53,9 @@ set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/led/led_toggle.c
     ${CMAKE_CURRENT_SOURCE_DIR}/led/led_isr.c
     ${CMAKE_CURRENT_SOURCE_DIR}/led/led_blink.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/led/wait_for_led.c
     ${CMAKE_CURRENT_SOURCE_DIR}/crc16.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/asksin/as_handle_cyclic_info.c
     ${CMAKE_CURRENT_SOURCE_DIR}/asksin/as_aes_reply.c
     ${CMAKE_CURRENT_SOURCE_DIR}/asksin/as_get_aes_key_index.c
     ${CMAKE_CURRENT_SOURCE_DIR}/asksin/as_set_new_aes_key.c
@@ -67,6 +69,7 @@ set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/asksin/as_encode.c
     ${CMAKE_CURRENT_SOURCE_DIR}/asksin/as_handle_packet.c
     ${CMAKE_CURRENT_SOURCE_DIR}/asksin/as_listen.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/asksin/as_peer_list_req.c
     ${CMAKE_CURRENT_SOURCE_DIR}/asksin/as_poll.c
     ${CMAKE_CURRENT_SOURCE_DIR}/asksin/as_send.c
     ${CMAKE_CURRENT_SOURCE_DIR}/asksin/as_send_contact_state.c
@@ -75,7 +78,6 @@ set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/radio/radio_deinit.c
     ${CMAKE_CURRENT_SOURCE_DIR}/radio/radio_init.c
     ${CMAKE_CURRENT_SOURCE_DIR}/radio/radio_enter_receive.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/radio/radio_poll.c
     ${CMAKE_CURRENT_SOURCE_DIR}/radio/radio_read_burst.c
     ${CMAKE_CURRENT_SOURCE_DIR}/radio/radio_read_reg.c
     ${CMAKE_CURRENT_SOURCE_DIR}/radio/radio_read_status.c
@@ -94,6 +96,8 @@ set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/spi/spi_enable.c
     ${CMAKE_CURRENT_SOURCE_DIR}/spi/spi_init.c
     ${CMAKE_CURRENT_SOURCE_DIR}/spi/spi_send_byte.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/timer/rtc_battery_timer_enable.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/timer/rtc_battery_timer_disable.c
     ${CMAKE_CURRENT_SOURCE_DIR}/timer/clear_timeout.c
     ${CMAKE_CURRENT_SOURCE_DIR}/timer/get_tick.c
     ${CMAKE_CURRENT_SOURCE_DIR}/timer/set_timeout.c
