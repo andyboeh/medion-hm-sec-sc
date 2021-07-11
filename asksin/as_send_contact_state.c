@@ -5,7 +5,6 @@
 #include "spi_disable.h"
 #include "as_listen.h"
 #include "led_blink.h"
-#include <stdbool.h>
 #include <stdint.h>
 
 extern bool window_open;
@@ -14,7 +13,7 @@ extern bool finished;
 extern bool as_ok;
 extern bool battery_low;
 
-void as_send_contact_state() {
+void as_send_contact_state(bool periodic) {
     as_packet_t status;
 
     spi_enable();
@@ -44,9 +43,11 @@ void as_send_contact_state() {
         status.flags |= AS_FLAG_BIDI;
 
     if(as_send(&status)) {
-        led_blink(LED_BLINK_ONCE);
+        if(!periodic)
+            led_blink(LED_BLINK_ONCE);
     } else {
-        led_blink(LED_BLINK_THRICE);
+        if(!periodic)
+            led_blink(LED_BLINK_THRICE);
     }
     spi_disable();
 }

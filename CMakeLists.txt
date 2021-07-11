@@ -96,6 +96,7 @@ set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/spi/spi_enable.c
     ${CMAKE_CURRENT_SOURCE_DIR}/spi/spi_init.c
     ${CMAKE_CURRENT_SOURCE_DIR}/spi/spi_send_byte.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/timer/rtc_isr.c
     ${CMAKE_CURRENT_SOURCE_DIR}/timer/rtc_battery_timer_enable.c
     ${CMAKE_CURRENT_SOURCE_DIR}/timer/rtc_battery_timer_disable.c
     ${CMAKE_CURRENT_SOURCE_DIR}/timer/clear_timeout.c

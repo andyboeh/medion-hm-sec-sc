@@ -20,32 +20,35 @@
 #include "led_isr.h"
 #include "tick_isr.h"
 #include "singleshot_isr.h"
+#include "rtc_isr.h"
 #include "button_init.h"
 #include "button_isr.h"
 #include "relay_init.h"
 #include "relay_isr.h"
 #include "measure_battery.h"
 #include "as_factory_reset.h"
+#include "rtc_battery_timer_enable.h"
 #include <stdbool.h>
 
 volatile e_request request_operation = OPERATION_NONE;
 volatile uint8_t timer_request = TIMER_NONE;
 bool window_open = false;
 bool button_pressed_while_boot = false;
+extern const uint8_t * cyclic_info;
 
 static void check_rel() {
     if(PA_IDR & REL) { // magnet not present
         if(!window_open) {
             window_open = true;
             tick_init();
-            as_send_contact_state();
+            as_send_contact_state(false);
             tick_deinit();
         }
     } else { // magnet present
         if(window_open) {
             window_open = false;
             tick_init();
-            as_send_contact_state();
+            as_send_contact_state(false);
             tick_deinit();
         }
     }
@@ -63,12 +66,18 @@ static void check_operation() {
     switch(request_operation) {
     case OPERATION_CHECK_REL:
         check_rel();
+        if(*cyclic_info) {
+            rtc_battery_timer_enable();
+        }
         enter_halt();
         break;
     case OPERATION_BUTTON_SHORT:
         tick_init();
         as_poll();
         tick_deinit();
+        if(*cyclic_info) {
+            rtc_battery_timer_enable();
+        }
         enter_halt();
         break;
     case OPERATION_BUTTON_LONG:
@@ -77,6 +86,13 @@ static void check_operation() {
             as_factory_reset();
             led_blink(LED_BLINK_THRICE);
         }
+        enter_halt();
+        break;
+    case OPERATION_MEASURE_BATTERY:
+        tick_init();
+        measure_battery();
+        as_send_contact_state(true);
+        tick_deinit();
         enter_halt();
         break;
     case OPERATION_ENTER_HALT:
@@ -119,6 +135,7 @@ void main(void) {
     // call the measure_battery function to get the low battery state.
     enable_interrupts();
     check_rel();
+    rtc_battery_timer_enable();
     for(;;) {
         wfi();
         check_operation();

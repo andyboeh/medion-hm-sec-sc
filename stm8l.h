@@ -148,6 +148,8 @@
 
 #define CLK_ECKCR_LSEON (1u<<2)
 #define CLK_ECKCR_LSERDY (1u<<3)
+#define CLK_ICKCR_LSION (1u<<2)
+#define CLK_ICKCR_LSIRDY (1u<<3)
 
 #define CLK_PCKENR1_TIM2 (1u<<0)
 #define CLK_PCKENR1_TIM3 (1u<<1)

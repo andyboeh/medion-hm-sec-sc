@@ -35,7 +35,8 @@ during transmit and receive, up to a few mA.
 
 ## TODO
 
-  - Periodic battery reporting
+  - Power improvements
+  - Peering
 
 ## Caveats
 

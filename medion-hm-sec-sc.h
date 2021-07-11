@@ -26,6 +26,7 @@ typedef enum {
     OPERATION_BUTTON_SHORT,
     OPERATION_BUTTON_LONG,
     OPERATION_ENTER_HALT,
+    OPERATION_MEASURE_BATTERY,
 } e_request;
 
 typedef enum {
