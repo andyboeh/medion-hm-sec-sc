@@ -69,6 +69,7 @@ static void check_operation() {
         if(*cyclic_info) {
             rtc_battery_timer_enable();
         }
+        request_operation = OPERATION_NONE;
         enter_halt();
         break;
     case OPERATION_BUTTON_SHORT:
@@ -78,6 +79,7 @@ static void check_operation() {
         if(*cyclic_info) {
             rtc_battery_timer_enable();
         }
+        request_operation = OPERATION_NONE;
         enter_halt();
         break;
     case OPERATION_BUTTON_LONG:
@@ -86,6 +88,7 @@ static void check_operation() {
             as_factory_reset();
             led_blink(LED_BLINK_THRICE);
         }
+        request_operation = OPERATION_NONE;
         enter_halt();
         break;
     case OPERATION_MEASURE_BATTERY:
@@ -93,15 +96,16 @@ static void check_operation() {
         measure_battery();
         as_send_contact_state(true);
         tick_deinit();
+        request_operation = OPERATION_NONE;
         enter_halt();
         break;
     case OPERATION_ENTER_HALT:
+        request_operation = OPERATION_NONE;
         enter_halt();
         break;
     case OPERATION_NONE:
     break;
     }
-    request_operation = OPERATION_NONE;
 }
 
 static void gpio_configure_unused() {
@@ -136,8 +140,8 @@ void main(void) {
     enable_interrupts();
     check_rel();
     rtc_battery_timer_enable();
+    request_operation = OPERATION_ENTER_HALT;
     for(;;) {
-        wfi();
         check_operation();
     }
 }
