@@ -59,27 +59,33 @@ static void enter_halt() {
     clear_singleshot_timer();
     wait_for_led();
     led_timer_deinit();
-    __asm__("halt");
+    // We cancel the halt process if an interrupt thas occured in the meantime
+    if(request_operation == OPERATION_NONE || request_operation == OPERATION_ENTER_HALT) {
+        __asm__("halt");
+    }
 }
 
 static void check_operation() {
     switch(request_operation) {
     case OPERATION_CHECK_REL:
+        request_operation = OPERATION_NONE;
         check_rel();
+
         if(*cyclic_info) {
             rtc_battery_timer_enable();
         }
-        request_operation = OPERATION_NONE;
         enter_halt();
         break;
     case OPERATION_BUTTON_SHORT:
+        request_operation = OPERATION_NONE;
         tick_init();
         as_poll();
         tick_deinit();
+
         if(*cyclic_info) {
             rtc_battery_timer_enable();
         }
-        request_operation = OPERATION_NONE;
+
         enter_halt();
         break;
     case OPERATION_BUTTON_LONG:
@@ -92,11 +98,11 @@ static void check_operation() {
         enter_halt();
         break;
     case OPERATION_MEASURE_BATTERY:
+        request_operation = OPERATION_NONE;
         tick_init();
         measure_battery();
         as_send_contact_state(true);
         tick_deinit();
-        request_operation = OPERATION_NONE;
         enter_halt();
         break;
     case OPERATION_ENTER_HALT:
@@ -135,8 +141,7 @@ void main(void) {
     // refuse operation.
     if(measure_battery() <= BAT_THRESHOLD_CRITICAL)
         __asm__("halt");
-    // FIXME: We should periodically, like once a day,
-    // call the measure_battery function to get the low battery state.
+
     enable_interrupts();
     check_rel();
     rtc_battery_timer_enable();
