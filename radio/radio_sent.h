@@ -3,6 +3,6 @@
 
 #include <stdbool.h>
 
-bool radio_sent();
+bool radio_sent(void);
 
 #endif //RADIO_SENT_H

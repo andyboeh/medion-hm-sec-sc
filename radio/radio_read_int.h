@@ -3,6 +3,6 @@
 
 #include <stdbool.h>
 
-bool radio_read_int();
+bool radio_read_int(void);
 
 #endif //RADIO_READ_INT_H

@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 
-bool radio_received();
+bool radio_received(void);
 
 #endif //RADIO_RECEIVED_H
 

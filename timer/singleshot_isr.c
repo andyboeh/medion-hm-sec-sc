@@ -10,7 +10,7 @@ extern volatile e_request request_operation;
 extern volatile uint8_t timer_request;
 extern volatile e_button_press_type button_operation;
 
-void singleshot_isr() __interrupt(21) {
+void singleshot_isr(void) __interrupt(21) {
     TIM3_SR1 &= ~(1 << 0); // Clear interrupt
     if(timer_request & TIMER_BUTTON) {
         switch(button_operation) {

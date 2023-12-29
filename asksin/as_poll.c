@@ -10,7 +10,7 @@
 extern bool finished;
 bool as_ok;
 
-void as_poll()
+void as_poll(void)
 {
 	spi_enable();
 	finished = false;

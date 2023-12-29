@@ -1,7 +1,7 @@
 #include "spi_disable.h"
 #include "stm8l.h"
 
-void spi_disable()
+void spi_disable(void)
 {
 	while (!(SPI1_SR & SPI_SR_TXE) || (SPI1_SR & SPI_SR_BSY))
 		;

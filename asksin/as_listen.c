@@ -18,7 +18,7 @@ const uint8_t * aes_channel1 = EEPROM_START + 33; // 1 byte
 const uint8_t * aes_key_index = EEPROM_START + 34; // 1 byte
 const uint8_t * cyclic_info = EEPROM_START + 35; // 1 byte
 
-void as_listen() {
+void as_listen(void) {
 	uint16_t timeout_at = get_tick() + 2000;
 
 	while (!finished && !tick_elapsed(timeout_at)) {

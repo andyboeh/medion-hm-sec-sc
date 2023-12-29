@@ -3,6 +3,6 @@
 
 #include <stdint.h>
 
-uint8_t measure_battery();
+uint8_t measure_battery(void);
 
 #endif //MEASURE_BATTERY_H

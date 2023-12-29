@@ -10,7 +10,7 @@ extern volatile e_blink_type led_blink_type;
 volatile uint8_t led_blink_count = 0;
 volatile uint8_t isr_run_count = 0;
 
-void led_isr() __interrupt(25) {
+void led_isr(void) __interrupt(25) {
     TIM4_SR1 &= ~(1 << 0); // Clear interrupt
     switch(led_blink_type) {
     case LED_BLINK_ONCE:

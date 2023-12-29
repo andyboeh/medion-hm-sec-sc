@@ -2,7 +2,7 @@
 #include "stm8l.h"
 #include "led_on.h"
 
-void rtc_battery_timer_enable() {
+void rtc_battery_timer_enable(void) {
     while(CLK_CRTCR & CLK_CRTCR_RTCSWBSY);
 
     CLK_CRTCR = 0x04; // Enable LSI clock, RTCDIV = 0

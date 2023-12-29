@@ -5,7 +5,7 @@
 
 bool battery_low = false;
 
-uint8_t measure_battery() {
+uint8_t measure_battery(void) {
     uint16_t sum = 0;
     uint8_t battery_voltage;
     

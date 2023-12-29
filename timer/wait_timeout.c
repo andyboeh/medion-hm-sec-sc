@@ -4,7 +4,7 @@
 
 extern volatile bool wait_for_timeout;
 
-void wait_timeout()
+void wait_timeout(void)
 {
     while (wait_for_timeout)
         wfi();

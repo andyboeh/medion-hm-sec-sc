@@ -1,7 +1,7 @@
 #include "rtc_battery_timer_disable.h"
 #include "stm8l.h"
 
-void rtc_battery_timer_disable() {
+void rtc_battery_timer_disable(void) {
     RTC_WPR = 0xCA;
     RTC_WPR = 0x53;
 

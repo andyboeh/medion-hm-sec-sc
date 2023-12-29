@@ -4,7 +4,7 @@
 
 extern volatile e_blink_type led_blink_type;
 
-void wait_for_led() {
+void wait_for_led(void) {
     while(led_blink_type != LED_BLINK_OFF)
         wfi();
 }

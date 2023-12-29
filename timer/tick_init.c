@@ -11,7 +11,7 @@ volatile uint16_t timeout_at = 0;
 
 volatile bool tick_ok = false;
 
-void tick_init()
+void tick_init(void)
 {
     if(tick_ok)
         return;

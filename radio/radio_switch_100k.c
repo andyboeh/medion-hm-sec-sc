@@ -22,7 +22,7 @@ CONSTMEM uint8_t reg_6e_72[] = {
     0x22,
     0x4C
 };
-void radio_switch_100k()
+void radio_switch_100k(void)
 {
 
 	// write all changed settings from Si443x-Register-Settings-100k.ods

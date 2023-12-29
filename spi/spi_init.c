@@ -3,7 +3,7 @@
 #include "medion-hm-sec-sc.h"
 #include "spi_defines.h"
 
-void spi_init()
+void spi_init(void)
 {
 	PB_ODR &= ~SCLK;
 	PB_CR1 = nSEL | SCLK | MOSI; // push-pull

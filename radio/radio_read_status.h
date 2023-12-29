@@ -3,6 +3,6 @@
 
 #include <stdint.h>
 
-uint8_t radio_read_status();
+uint8_t radio_read_status(void);
 
 #endif //RADIO_READ_STATUS_H

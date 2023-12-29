@@ -3,6 +3,6 @@
 
 #include <stdint.h>
 
-uint16_t get_tick();
+uint16_t get_tick(void);
 
 #endif //GET_TICK_H

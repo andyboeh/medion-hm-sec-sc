@@ -3,7 +3,7 @@
 
 extern uint8_t as_cnt;
 
-void as_send_device_info()
+void as_send_device_info(void)
 {
     as_packet_t dev_info;
 
@@ -22,7 +22,7 @@ void as_send_device_info()
         }
     }
     dev_info.payload[13] = 0x80; // Device Subtype
-    dev_info.payload[14] = 0x01; // Channel Count
+    dev_info.payload[14] = 0x02; // Channel Count
     dev_info.payload[15] = 0x00;
     dev_info.payload[16] = 0x00; // Device Info
 	if (!ID_IS_NULL(hm_master_id))

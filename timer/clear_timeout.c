@@ -4,7 +4,7 @@
 
 extern volatile bool wait_for_timeout;
 
-void clear_timeout()
+void clear_timeout(void)
 {
     wait_for_timeout = false;
 }

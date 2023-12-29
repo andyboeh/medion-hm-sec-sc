@@ -10,7 +10,7 @@ static void write_value(const uint8_t * address, uint8_t value) {
 
 }
 
-void as_factory_reset() {
+void as_factory_reset(void) {
     // enable eeprom programming
     FLASH_DUKR = 0xAE;
     FLASH_DUKR = 0x56;

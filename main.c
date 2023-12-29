@@ -36,7 +36,7 @@ bool window_open = false;
 bool button_pressed_while_boot = false;
 extern const uint8_t * cyclic_info;
 
-static void check_rel() {
+static void check_rel(void) {
     if(PA_IDR & REL) { // magnet not present
         if(!window_open) {
             window_open = true;
@@ -54,7 +54,7 @@ static void check_rel() {
     }
 }
 
-static void enter_halt() {
+static void enter_halt(void) {
     tick_deinit();
     clear_singleshot_timer();
     wait_for_led();
@@ -65,7 +65,7 @@ static void enter_halt() {
     }
 }
 
-static void check_operation() {
+static void check_operation(void) {
     switch(request_operation) {
     case OPERATION_CHECK_REL:
         request_operation = OPERATION_NONE;
@@ -89,11 +89,6 @@ static void check_operation() {
         enter_halt();
         break;
     case OPERATION_BUTTON_LONG:
-        if(button_pressed_while_boot) {
-            button_pressed_while_boot = false;
-            as_factory_reset();
-            led_blink(LED_BLINK_THRICE);
-        }
         request_operation = OPERATION_NONE;
         enter_halt();
         break;
@@ -114,7 +109,7 @@ static void check_operation() {
     }
 }
 
-static void gpio_configure_unused() {
+static void gpio_configure_unused(void) {
     PA_DDR = 0;
     PA_CR1 = 0xff;
     PB_DDR = 0;
@@ -143,6 +138,11 @@ void main(void) {
         __asm__("halt");
 
     enable_interrupts();
+    if(button_pressed_while_boot) {
+        button_pressed_while_boot = false;
+        as_factory_reset();
+        led_blink(LED_BLINK_THRICE);
+    }
     check_rel();
     rtc_battery_timer_enable();
     request_operation = OPERATION_ENTER_HALT;

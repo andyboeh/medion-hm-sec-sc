@@ -7,7 +7,7 @@
 //extern volatile uint8_t timer_request;
 extern volatile e_request request_operation;
 
-void relay_isr() __interrupt(14) {
+void relay_isr(void) __interrupt(14) {
     EXTI_SR1 |= REL; // clear interrupt
     request_operation = OPERATION_CHECK_REL;
     // We don't need the debounce timer, since there is an

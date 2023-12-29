@@ -26,7 +26,7 @@ const uint8_t default_aes_key[16] = {
     0xE4
 };
 
-static void as_write_aes_key() {
+static void as_write_aes_key(void) {
     FLASH_DUKR = 0xAE;
     FLASH_DUKR = 0x56;
 

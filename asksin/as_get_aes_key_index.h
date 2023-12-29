@@ -3,6 +3,6 @@
 
 #include <stdint.h>
 
-uint8_t as_get_aes_key_index();
+uint8_t as_get_aes_key_index(void);
 
 #endif //AS_GET_AES_KEY_INDEX

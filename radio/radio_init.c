@@ -48,7 +48,7 @@ CONSTMEM uint8_t reg_6d_77[] = {
     0x67, // Nominal Carrier Frequency High Byte: 103
     0xC0  // Nominal Carrier Frequency Low Byte: 293
 };
-void radio_init()
+void radio_init(void)
 {
 	spi_init();
 	spi_enable();

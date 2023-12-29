@@ -2,7 +2,7 @@
 #include "stm8l.h"
 #include "medion-hm-sec-sc.h"
 
-void relay_init() {
+void relay_init(void) {
     PA_DDR &= ~REL; // Configure input
     //PA_CR1 |= REL; // Enable pull-up
     PA_CR1 &= ~REL; // Disable pull-up, there is an external circuit present

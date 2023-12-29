@@ -6,7 +6,7 @@
 
 extern volatile bool tick_ok;
 
-void tick_deinit()
+void tick_deinit(void)
 {
 	clear_timeout();
     TIM2_SR1 &= ~(1<<0); // Clear interrupt

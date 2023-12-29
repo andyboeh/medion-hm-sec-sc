@@ -6,7 +6,7 @@
 
 extern e_radio_state radio_state;
 
-bool radio_sent()
+bool radio_sent(void)
 {
 	if (radio_state != radio_sending)
 		return false;

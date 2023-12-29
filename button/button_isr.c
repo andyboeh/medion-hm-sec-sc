@@ -8,14 +8,14 @@ extern volatile uint8_t timer_request;
 extern volatile e_request request_operation;
 volatile e_button_press_type button_operation = BUTTON_PRESS_NONE;
 
-void handle_button_pressed() {
+void handle_button_pressed(void) {
     button_operation = BUTTON_PRESS_NONE;
     clear_singleshot_timer();
     set_singleshot_timer(50);
     timer_request |= TIMER_BUTTON;
 }
 
-void handle_button_released() {
+void handle_button_released(void) {
     switch(button_operation) {
     case BUTTON_PRESS_SHORT:
         request_operation = OPERATION_BUTTON_SHORT;
@@ -32,7 +32,7 @@ void handle_button_released() {
     button_operation = BUTTON_PRESS_NONE;
 }
 
-void button_isr() __interrupt(13) {
+void button_isr(void) __interrupt(13) {
     EXTI_SR1 |= BUTTON;
     if(PA_IDR & BUTTON) {
         // Button released
