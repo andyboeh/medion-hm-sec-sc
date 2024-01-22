@@ -4,8 +4,8 @@
 
 void rtc_battery_timer_enable(void) {
     while(CLK_CRTCR & CLK_CRTCR_RTCSWBSY);
-
     CLK_CRTCR = 0x04; // Enable LSI clock, RTCDIV = 0
+
     while(!(CLK_ICKCR & CLK_ICKCR_LSIRDY));
     CLK_PCKENR2 |= CLK_PCKENR2_RTC;
 

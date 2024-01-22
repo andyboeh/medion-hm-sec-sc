@@ -20,11 +20,7 @@ void radio_send(as_packet_t * pkg)
 	crc = crc16(0xffff, length + 1, pkg->data);
 	pkg->data[length + 1] = crc >> 8;
 	pkg->data[length + 2] = crc & 0xff;
-#if 1 // this is only to test this function! remove it once it worked once! TODO
-	crc = crc16(0xffff, length + 3, pkg->data);
-	if (crc != 0)
-		__asm__ ("break");
-#endif
+
     radio_white(length + 3, pkg->data); // 1 byte length + 2 byte crc
 
     radio_write_reg(SI4430_OMFC2, SI4430_FFCLRRX | SI4430_FFCLRTX); // clear fifos

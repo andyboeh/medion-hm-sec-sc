@@ -10,14 +10,18 @@
 static as_packet_t ack_packet;
 
 bool as_send(as_packet_t * packet) {
-	bool ok = false;
+    bool ok = false;
 
-	for (int try = 0; try < 3; try++) {
-		uint16_t timeout_at;
+    int retry = *transmit_try_max;
+    if(retry < 3)
+        retry = 3;
 
-		radio_send(packet);
-		if (!radio_wait(get_tick() + 1000))
-			__asm__("break\n"); // TODO
+    for (int try = 0; try < retry; try++) {
+        uint16_t timeout_at;
+
+        radio_send(packet);
+        if (!radio_wait(get_tick() + 1000))
+            __asm__("break\n"); // TODO
 
 		if (!(packet->flags & AS_FLAG_BIDI)) {
 			ok = true;
@@ -49,7 +53,7 @@ bool as_send(as_packet_t * packet) {
                 as_handle_packet(&ack_packet, NULL);
             if (ack_packet.length >= AS_HEADER_SIZE + 1 && ack_packet.payload[0] == 0x04) { // AES ACK
                 as_handle_packet(&ack_packet, packet);
-                timeout_at = get_tick() + 500;
+                timeout_at = get_tick() + 1000;
                 continue;
             }
 

@@ -27,6 +27,7 @@
 #include "relay_isr.h"
 #include "measure_battery.h"
 #include "as_factory_reset.h"
+#include "rtc_battery_timer_disable.h"
 #include "rtc_battery_timer_enable.h"
 #include <stdbool.h>
 
@@ -72,6 +73,7 @@ static void check_operation(void) {
         check_rel();
 
         if(*cyclic_info) {
+            rtc_battery_timer_disable();
             rtc_battery_timer_enable();
         }
         enter_halt();
@@ -83,6 +85,7 @@ static void check_operation(void) {
         tick_deinit();
 
         if(*cyclic_info) {
+            rtc_battery_timer_disable();
             rtc_battery_timer_enable();
         }
 
@@ -144,7 +147,10 @@ void main(void) {
         led_blink(LED_BLINK_THRICE);
     }
     check_rel();
-    rtc_battery_timer_enable();
+    if(*cyclic_info) {
+        rtc_battery_timer_disable();
+        rtc_battery_timer_enable();
+    }
     request_operation = OPERATION_ENTER_HALT;
     for(;;) {
         check_operation();

@@ -26,6 +26,22 @@ void as_factory_reset(void) {
     write_value(aes_channel1, 0x00);
     write_value(aes_key_index, 0x00);
     write_value(cyclic_info, 0x00);
+    write_value(sabotage_message, 0x01);
+    write_value(transmit_try_max, 0x06);
+    write_value(link_channel1, 0x00);
+    write_value(link_channel2, 0x00);
+    write_value(link_channel3, 0x00);
+    write_value(link_channel4, 0x00);
+    for(int i=0; i<3; i++) {
+        write_value(link_address1+i, 0x00);
+        write_value(link_address2+i, 0x00);
+        write_value(link_address3+i, 0x00);
+        write_value(link_address4+i, 0x00);
+    }
+    write_value(msg_for_pos, 0x60);
+    write_value(event_delay_time, 0x00);
+    write_value(led_on_time, 0x64);
+    write_value(peer_transmit_try_max, 0x06);
 
     FLASH_IAPSR &= ~FLASH_IAPSR_DUL;
 }

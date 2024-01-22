@@ -9,14 +9,16 @@
 #include "led_blink.h"
 #include "as_send.h"
 #include "as_packet.h"
+#include "as_factory_reset.h"
 #include "stm8l.h"
 
 extern bool finished;
 
 void as_handle_packet(as_packet_t * packet, as_packet_t *sent_packet)
 {
-	bool enter_bootloader = false;
-	bool ack = false;
+    bool enter_bootloader = false;
+    bool factory_reset = false;
+    bool ack = false;
     bool ack_payload = true;
     as_packet_t reply_packet;
 
@@ -57,10 +59,13 @@ void as_handle_packet(as_packet_t * packet, as_packet_t *sent_packet)
                 as_aes_reply(packet, sent_packet, &reply_packet);
                 ack_payload = false;
             }
+            if(packet->payload[0] == 0x00) { // ACK
+                finished = true;
+                as_ok = true;
+            }
             if(packet->payload[0] == 0x01) { // ACK_STATUS
                 finished = true;
                 as_ok = true;
-                // FIXME: ack?
             }
         }
         break;
@@ -73,6 +78,10 @@ void as_handle_packet(as_packet_t * packet, as_packet_t *sent_packet)
     case 0x11: // INSTRUCTION
         if(packet->length >= AS_HEADER_SIZE + 1 && packet->payload[0] == 0xca) {
             enter_bootloader = true;
+            ack = true;
+        }
+        if(packet->length >= AS_HEADER_SIZE + 1 && packet->payload[0] == 0x04) {
+            factory_reset = true;
             ack = true;
         }
         break;
@@ -90,6 +99,10 @@ void as_handle_packet(as_packet_t * packet, as_packet_t *sent_packet)
 
         as_send(&reply_packet);
 	}
+
+    if(factory_reset) {
+        as_factory_reset();
+    }
 
 	if (enter_bootloader) {
         // disable_interrupts();

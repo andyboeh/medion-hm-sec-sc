@@ -23,16 +23,6 @@ void as_poll(void)
     }
 
     as_send_device_info();
-    /*
-    if (ID_IS_NULL(hm_master_id)) {
-        led_blink(LED_BLINK_FAST);
-		as_send_device_info();
-    }
-    else {
-        led_blink(LED_BLINK_SLOW);
-		as_send_status();
-   }
-   */
 	
 	as_listen();
 

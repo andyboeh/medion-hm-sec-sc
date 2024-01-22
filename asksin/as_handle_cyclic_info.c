@@ -5,6 +5,7 @@
 
 void as_handle_cyclic_info(void) {
     if(*cyclic_info) {
+        rtc_battery_timer_disable();
         rtc_battery_timer_enable();
     } else {
         rtc_battery_timer_disable();

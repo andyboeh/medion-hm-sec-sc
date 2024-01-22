@@ -35,6 +35,20 @@ bool as_config_write(uint8_t channel, uint8_t length, uint8_t * data)
                 continue;
             }
             break;
+        case 0x10: // SABOTAGE_MESSAGE
+            if(cdata.channel == 0 && cdata.list == 0) {
+                ((uint8_t*)sabotage_message)[0] = data[i+1];
+            } else {
+                continue;
+            }
+            break;
+        case 0x14: // TRANSMIT_TRY_MAX
+            if(cdata.channel == 0 && cdata.list == 0) {
+                ((uint8_t*)transmit_try_max)[0] = data[i+1];
+            } else {
+                continue;
+            }
+            break;
         case 0x0a:
             if(cdata.channel == 0 && cdata.list == 0) {
                 ((uint8_t*)hm_master_id)[0] = data[i + 1];
